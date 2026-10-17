@@ -8,7 +8,7 @@ This repository contains Flutter projects developed as part of the Digital Skill
 
 | Project Folder | Description |
 | :--- | :--- |
-| [expense_tracker](./expense_tracker) | Personal finance and expense tracker app built following a Figma UI design. |
+| [expense_tracker](./expense_tracker) | Personal finance and expense tracker app focusing on Figma UI design implementation and core functionality. |
 | [my_calculator](./my_calculator) | Calculator app for basic arithmetic operations. |
 | [to_do_app](./to_do_app) | To-do app for creating, updating, and managing tasks. |
 

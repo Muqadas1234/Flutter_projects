@@ -1,37 +1,51 @@
 # Expense Tracker
 
-A modern personal finance and expense management mobile application built with Flutter and Dart. Developed as part of the Digital Skills Training Program (DSTP), Expense Tracker helps individuals record daily expenditures, categorize spending habits, set monthly budgets, and visualize their financial health through clean analytical views.
+A personal finance mobile application developed with Flutter and Dart as part of the Digital Skills Training Program (DSTP). This project focuses on translating a Figma user interface design into functional Flutter screens, accompanied by core front-end features for recording and inspecting daily expenses.
 
 ---
 
 ## UI / UX Design Reference
 
-The user interface of this project was implemented following the Figma design layout:
+The user interface of this project was implemented following the Figma design mockup:
 
 - Figma Design: [Kharcha – Expense Tracker on Figma](https://www.figma.com/design/Pcy33ApjHDMmYariEhf7ze/Kharcha-%25E2%2580%2593-Expense-Tracker?node-id=0-1)
 
-The color palette, component styling, input fields, visual indicators, and typography were built to align with the screens specified in the design mockup.
+Component dimensions, border radiuses, color schemes, SVG iconography, and typography were styled to closely replicate the layout and aesthetic of the design file.
+
+---
+
+## Current Status and Scope
+
+This project is currently centered around UI implementation and select core functionalities:
+
+- Completed UI: Full user interface implementation for login, signup, dashboard, expense creation, transaction details/editing, categories, monthly budget, and settings screens.
+- Active Functionalities:
+  - Screen routing and bottom navigation across multiple tabs.
+  - Adding, viewing, and editing expenses locally using in-memory state.
+  - Category selection with custom color indicators and SVG asset rendering.
+  - Real-time client-side calculations for budget progress, remaining limit, and formatted timestamps.
+- Planned Work: Persistent local storage (e.g. Hive / SQLite), backend API synchronization, and extended reporting charts.
 
 ---
 
 ## Overview
 
-Managing day-to-day finances manually often leads to unorganized records and difficulty understanding where money is spent. Expense Tracker addresses this by offering a lightweight, intuitive mobile experience where users can quickly log expenses as they happen.
+Tracking daily cash flow often starts with a clear, distraction-free visual layout. Expense Tracker was built to practice converting a production-grade Figma design into reusable Flutter widgets, validating layout responsiveness, and handling basic application states without clutter.
 
-The application organizes data by category, compares total spending against a set monthly budget in real time, and provides clear visual breakdowns to support better financial decisions.
+Users can move through authentication, view their current month's spending status against a budget goal, and browse categorized expenses with clean visual cues.
 
 ---
 
-## Features
+## Key Features
 
-- User Authentication: Clean login and signup screens with formatted input fields and password visibility toggling.
-- Financial Dashboard: Home screen featuring current month spending totals, budget limits, remaining balance, and a visual progress indicator.
-- Transaction Logging: Add expense flow allowing users to input title, numerical amount, category assignment, and date.
-- Expense Inspection and Modification: Detail view to inspect existing transactions, update details, or delete records.
-- Categorization System: Color-coded categories (Food, Transport, Health, Shopping, Utility Bills, Entertainment) with custom SVG icons for quick visual identification.
-- Spending Analytics: Dedicated summary view displaying category-wise expenditure breakdowns and budget consumption.
-- Budget Goal Setting: Monthly budget screen to set and adjust spending thresholds.
-- Multi-Tab Navigation: Bottom navigation bar for switching between Home, Expense Management, Summary, and Settings screens.
+- Authentication Screens: Styled login and registration layouts with form inputs and password visibility toggling.
+- Financial Dashboard: Home screen featuring current month spending, budget limits, remaining balance, and a linear progress bar.
+- Expense Logging: Add expense flow allowing users to input an expense title, amount, category, and date.
+- Expense Details and Editing: Screen for inspecting existing transaction information, updating values, or removing entries.
+- Category System: Categorization with custom SVG icons and dedicated color palettes (Food, Transport, Health, Shopping, Utility Bills, Entertainment).
+- Spending Analytics: Summary view showing category-wise spending distribution and budget consumption.
+- Budget Management: Dedicated screen for setting and monitoring monthly expenditure targets.
+- Bottom Navigation Bar: Persistent bottom navigation for switching smoothly across tabs.
 
 ---
 
@@ -44,15 +58,15 @@ expense_tracker/
 ├── lib/
 │   ├── main.dart              # Application entry point
 │   ├── Model/
-│   │   └── expense_model.dart # Data models for expenses and categories
+│   │   └── expense_model.dart # Expense and Category models
 │   ├── utils/
-│   │   ├── app_assets.dart    # Asset path references
-│   │   ├── app_colors.dart    # Application color constants
-│   │   └── global.dart        # Global data state and mock transactions
+│   │   ├── app_assets.dart    # Centralized asset references
+│   │   ├── app_colors.dart    # Theme and category color definitions
+│   │   └── global.dart        # In-memory mock data and global state
 │   └── view/
-│       ├── components/        # Reusable buttons and text field widgets
+│       ├── components/        # Reusable custom buttons and text fields
 │       └── screens/
-│           ├── auth/          # Login and registration screens
+│           ├── auth/          # Login and signup screens
 │           └── main_screen/   # Dashboard, add expense, edit, and tab screens
 ├── pubspec.yaml               # Package dependencies and asset configuration
 └── README.md                  # Project documentation
@@ -62,11 +76,11 @@ expense_tracker/
 
 ## Built With
 
-- Flutter: Cross-platform UI toolkit.
-- Dart: Client-optimized programming language.
-- flutter_svg: Vector graphics rendering for category icons.
-- google_fonts: Typography rendering across screen sizes.
-- intl: Date, time, and numerical formatting.
+- Flutter: Cross-platform UI framework.
+- Dart: Programming language.
+- flutter_svg: Vector graphic rendering for category icons.
+- google_fonts: Typography styling.
+- intl: Date and currency formatting.
 
 ---
 
@@ -74,11 +88,9 @@ expense_tracker/
 
 ### Prerequisites
 
-Ensure you have the following installed on your machine:
-
 - Flutter SDK (version 3.11.4 or higher)
 - Dart SDK
-- An Android device / emulator, iOS simulator, or desktop browser
+- An Android emulator, physical device, iOS simulator, or browser
 
 ### Installation and Run
 
@@ -87,12 +99,12 @@ Ensure you have the following installed on your machine:
    cd expense_tracker
    ```
 
-2. Download and install all dependencies:
+2. Install packages:
    ```bash
    flutter pub get
    ```
 
-3. Launch the application:
+3. Run the application:
    ```bash
    flutter run
    ```
