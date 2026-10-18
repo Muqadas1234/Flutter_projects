@@ -1,107 +1,102 @@
-# StudyNest 📚 — Assignment 1
+# StudyNest - Assignment 1
 
-Welcome to **StudyNest**! This repository contains my submission for **Assignment 1** as part of the DSTP Training Program.
+StudyNest is a Flutter-based mobile application created for Assignment 1 under the Digital Skills Training Program (DSTP).
 
-> ℹ️ **Project Note:**  
-> This project is primarily a **UI implementation** with some essential interactive functionality (such as adding dynamic study sessions, date & time pickers, and navigation). It is **not** a full-scale or backend-connected production application, but rather focused on translating UI/UX designs into clean, responsive Flutter code.
-
----
-
-## 🎨 Figma Design Reference
-
-The design for this app was carefully followed from this Figma board:
-- 🔗 **Figma Design Link:** [DSTP StudyNest Design](https://www.figma.com/design/F8FqJ5cbcCDzD6poRPG2pI/DSTP-Quiz3?node-id=2205-6&t=PvFaPr64mYudeinc-0)
-
-I worked to match the layout, typography, colors, and overall visual feel closely to the Figma specifications.
+This project focuses on translating a Figma design into functional Flutter UI components, implementing screen navigation, and handling basic client-side interactions such as creating and listing study sessions. It is designed as a frontend interface project rather than a full-scale production application with backend services.
 
 ---
 
-## ✨ Features & What's Implemented
+## Figma Design Reference
 
-### 1. 🔐 Authentication Screens
-- **Login Screen:** Clean input fields for email and password, social login styling, and navigation to Sign Up.
-- **Sign Up Screen:** Account creation interface styled with custom reusable fields and buttons.
+The user interface was built by following this Figma design:
+- Design Link: https://www.figma.com/design/F8FqJ5cbcCDzD6poRPG2pI/DSTP-Quiz3?node-id=2205-6&t=PvFaPr64mYudeinc-0
 
-### 2. 🏠 Main Experience & Navigation
-- **Bottom Navigation Bar:** Smooth switching between the Home dashboard and the Profile screen.
-- **Home Dashboard:** Displays upcoming/recent study sessions with tags, duration, and status indicators.
-- **Profile Screen:** User profile overview with study stats and account settings layout.
-
-### 3. ➕ Interactive "Add Session" Modal Bottom Sheet
-- Tap on the floating action button to open a custom bottom sheet matching the Figma design.
-- Input fields for session **Title** and **Description**.
-- **Date Picker Dialog:** Select the date for your study session.
-- **Time Picker:** Choose the exact time for the session.
-- **Dynamic List Update:** Submitting the session appends it directly to the study session list on the Home screen in real time!
-
-### 4. 🧩 Reusable & Modular Components
-- `CustomButton`: Consistent, reusable rounded button widget with customizable text and actions.
-- `CustomTextField`: Reusable styled input fields.
-- `CustomHeader`: Consistent screen headers and branding.
-- Organized folder structure separating models, utils, custom components, and screens.
+Efforts were made to replicate the layout, color palette, typography, and card components as closely as possible to the design board.
 
 ---
 
-## 🛠️ Tech Stack & Packages
+## What is Implemented
 
-- **Framework:** [Flutter](https://flutter.dev/) (Dart)
-- **Design System:** Material Design 3 (customized via Figma palette)
-- **Packages used:**
-  - `google_fonts` — Clean typography matching the design.
-  - `flutter_svg` — Vector icons rendering.
-  - `intl` — Date & time formatting.
-  - `cupertino_icons` — Icon assets.
+### Authentication Flow
+- Login screen with email and password input fields, social login buttons styling, and navigation to registration.
+- Sign up screen with custom form fields and action buttons.
+
+### Main Navigation and Dashboard
+- Bottom navigation bar allowing users to switch between the Home dashboard and the Profile screen.
+- Home screen displaying a list of current and upcoming study sessions, category chips, and overview cards.
+- Profile screen showing user information and study statistics.
+
+### Add Study Session Bottom Sheet
+- A modal bottom sheet triggered from the action button.
+- Title and description input fields.
+- Date picker dialog allowing users to pick a session date.
+- Time picker dialog allowing users to pick a session time.
+- Adding a session dynamically updates the list displayed on the Home screen in real time.
+
+### Reusable Widgets
+- CustomButton: A reusable button component used across authentication and session creation.
+- CustomTextField: Standardized input field styling.
+- CustomHeader: Consistent header widget for auth screens.
 
 ---
 
-## 🚀 Getting Started & How to Run
+## Tech Stack and Dependencies
 
-To run this project locally on your machine:
+- Flutter SDK (Dart)
+- Material 3 Design
+- google_fonts: Typography styling
+- flutter_svg: Rendering SVG vector assets
+- intl: Date and time formatting
+- cupertino_icons: Additional icon assets
 
-1. **Clone the repository:**
+---
+
+## Getting Started
+
+To run the project locally on your machine:
+
+1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/studynest.git
+   git clone https://github.com/Muqadas1234/Flutter_projects.git
    ```
 
-2. **Navigate to the project folder:**
+2. Navigate to the project directory:
    ```bash
-   cd studynest
+   cd "Assignment 1 StudyNest/studynest"
    ```
 
-3. **Install dependencies:**
+3. Fetch required packages:
    ```bash
    flutter pub get
    ```
 
-4. **Run the app:**
+4. Run the app:
    ```bash
    flutter run
    ```
-   *(You can run it on Chrome/Web, Android Emulator, or an iOS Simulator/physical device).*
 
 ---
 
-## 📂 Project Structure
+## Project Structure
 
 ```text
 lib/
-├── Model/
-│   └── studynest_model.dart        # Data model for study sessions
-├── utils/
-│   ├── app_assets.dart             # Asset paths (images/icons)
-│   ├── app_colors.dart             # App color palette from Figma
-│   └── global.dart                 # Shared in-memory list of sessions
-├── view/
-│   ├── components/                 # Reusable UI widgets (buttons, fields, header)
-│   └── screens/
-│       ├── auth/                   # Login & Sign Up screens
-│       └── main_screen/            # Bottom Nav, Home, and Profile screens
-└── main.dart                       # App entry point
+|-- Model/
+|   `-- studynest_model.dart        # Session data model
+|-- utils/
+|   |-- app_assets.dart             # Asset constants
+|   |-- app_colors.dart             # Color constants from Figma
+|   `-- global.dart                 # Shared in-memory sessions list
+|-- view/
+|   |-- components/                 # Reusable UI widgets
+|   `-- screens/
+|       |-- auth/                   # Login and Signup screens
+|       `-- main_screen/            # Bottom nav, Home, and Profile screens
+`-- main.dart                       # Application entry point
 ```
 
 ---
 
-## 👤 Author
+## Author
 
-Developed by **Muqaddas** as part of the **DSTP Training Program (Assignment 1)**.  
-Feedback and suggestions are always welcome!
+Developed by Muqaddas Akram as part of the Digital Skills Training Program (DSTP) - Assignment 1.
