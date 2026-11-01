@@ -1,12 +1,15 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
+
 import 'for_student_add_student.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await GetStorage.init();
   runApp(const StudentApp());
 }
-
-// STUDENT MODEL
-
 
 class Student {
   int id;
@@ -20,11 +23,27 @@ class Student {
     required this.fatherName,
     this.subjects,
   });
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'fatherName': fatherName,
+      'subjects': subjects,
+    };
+  }
+
+  factory Student.fromJson(Map<String, dynamic> json) {
+    return Student(
+      id: json['id'] as int,
+      name: json['name'] as String,
+      fatherName: json['fatherName'] as String,
+      subjects: (json['subjects'] as List<dynamic>?)
+          ?.map((subject) => subject.toString())
+          .toList(),
+    );
+  }
 }
-
-
-// APP
-
 
 class StudentApp extends StatelessWidget {
   const StudentApp({super.key});
@@ -38,10 +57,6 @@ class StudentApp extends StatelessWidget {
   }
 }
 
-
-// STUDENT LIST SCREEN
-
-
 class StudentListScreen extends StatefulWidget {
   const StudentListScreen({super.key});
 
@@ -50,12 +65,10 @@ class StudentListScreen extends StatefulWidget {
       _StudentListScreenState();
 }
 
-class _StudentListScreenState
-    extends State<StudentListScreen> {
+class _StudentListScreenState extends State<StudentListScreen> {
+  final GetStorage storage = GetStorage();
 
-
-  // STUDENT LIST
-
+  static const String studentsKey = 'students';
 
   List<Student> students = [
     Student(
@@ -80,12 +93,49 @@ class _StudentListScreenState
     ),
   ];
 
-  // ===============================
-  // ADD STUDENT
-  // ===============================
+  @override
+  void initState() {
+    super.initState();
+    loadStudents();
+  }
 
-  void addStudent() async {
-    final result = await Navigator.push(
+  Future<void> loadStudents() async {
+    final String? savedData = storage.read<String>(studentsKey);
+
+    if (savedData != null) {
+      try {
+        final List<dynamic> decodedData = jsonDecode(savedData);
+
+        final List<Student> savedStudents = decodedData.map((item) {
+          return Student.fromJson(
+            Map<String, dynamic>.from(item as Map),
+          );
+        }).toList();
+
+        if (!mounted) return;
+
+        setState(() {
+          students = savedStudents;
+        });
+      } catch (error) {
+        debugPrint('Error loading students: $error');
+      }
+    } else {
+      await saveStudents();
+    }
+  }
+
+  Future<void> saveStudents() async {
+    final String encodedData = jsonEncode(
+      students.map((student) => student.toJson()).toList(),
+    );
+
+    await storage.write(studentsKey, encodedData);
+  }
+
+
+  Future<void> addStudent() async {
+    final result = await Navigator.push<Student>(
       context,
       MaterialPageRoute(
         builder: (context) {
@@ -94,27 +144,29 @@ class _StudentListScreenState
       ),
     );
 
-    if (result != null && result is Student) {
+    if (result != null) {
       setState(() {
         students.add(result);
       });
+
+      await saveStudents();
     }
   }
 
   // DELETE STUDENT
 
-
-  void removeStudent(int index) {
+  Future<void> removeStudent(int index) async {
     setState(() {
       students.removeAt(index);
     });
-  }
 
+    await saveStudents();
+  }
 
   // EDIT STUDENT
 
-  void editStudent(Student studentModelToEdit) async {
-    final result = await Navigator.push(
+  Future<void> editStudent(Student studentModelToEdit) async {
+    final result = await Navigator.push<Student>(
       context,
       MaterialPageRoute(
         builder: (context) => ForStudentsEditScreen(
@@ -123,19 +175,22 @@ class _StudentListScreenState
       ),
     );
 
-    print("updated name\n${result.name}");
+    if (result == null) return;
 
-    int foundIndex =
-    students.indexWhere((student) => student.id == result.id);
+    final int foundIndex = students.indexWhere(
+          (student) => student.id == result.id,
+    );
 
-    students[foundIndex] = result;
+    if (foundIndex == -1) return;
 
-    setState(() {});
+    setState(() {
+      students[foundIndex] = result;
+    });
+
+    await saveStudents();
   }
 
-
   // STUDENT CARD
-
 
   Widget myStudentCard({
     required Student student,
@@ -143,49 +198,34 @@ class _StudentListScreenState
   }) {
     return Container(
       width: double.infinity,
-
       margin: const EdgeInsets.only(
         bottom: 10,
       ),
-
       padding: const EdgeInsets.all(12),
-
       decoration: BoxDecoration(
         color: Colors.blue.shade50,
         borderRadius: BorderRadius.circular(10),
       ),
-
       child: Row(
         children: [
-
-
           // STUDENT INFORMATION
-
 
           Expanded(
             child: Column(
-              crossAxisAlignment:
-              CrossAxisAlignment.start,
-
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-
                 Text(
                   student.name,
-
                   style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-
                 const SizedBox(height: 5),
-
                 Text(
                   student.fatherName,
                 ),
-
                 const SizedBox(height: 5),
-
                 Text(
                   "ID: ${student.id}",
                 ),
@@ -193,15 +233,12 @@ class _StudentListScreenState
             ),
           ),
 
-
           // EDIT
-
 
           InkWell(
             onTap: () {
               editStudent(student);
             },
-
             child: const Icon(
               Icons.edit,
               color: Colors.blue,
@@ -216,7 +253,6 @@ class _StudentListScreenState
             onTap: () {
               removeStudent(index);
             },
-
             child: const Icon(
               Icons.delete,
               color: Colors.red,
@@ -227,9 +263,7 @@ class _StudentListScreenState
     );
   }
 
-
   // BUILD
-
 
   @override
   Widget build(BuildContext context) {
@@ -239,18 +273,12 @@ class _StudentListScreenState
           "Student Manager",
         ),
       ),
-
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
-
         child: ListView.builder(
           itemCount: students.length,
-
           shrinkWrap: true,
-
-          physics:
-          const NeverScrollableScrollPhysics(),
-
+          physics: const NeverScrollableScrollPhysics(),
           itemBuilder: (context, index) {
             return myStudentCard(
               student: students[index],
@@ -262,10 +290,8 @@ class _StudentListScreenState
 
       // ADD BUTTON
 
-
       floatingActionButton: FloatingActionButton(
         onPressed: addStudent,
-
         child: const Icon(
           Icons.add,
         ),

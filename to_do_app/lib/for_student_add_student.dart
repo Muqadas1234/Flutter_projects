@@ -4,9 +4,6 @@ import 'package:flutter/material.dart';
 import 'main.dart';
 
 
-// ADD STUDENT SCREEN
-
-
 class ForStudentAddStudent extends StatefulWidget {
   const ForStudentAddStudent({super.key});
 
@@ -19,16 +16,12 @@ class _ForStudentAddStudentState
     extends State<ForStudentAddStudent> {
 
 
-  // CONTROLLERS
 
   final TextEditingController nameController =
   TextEditingController();
 
   final TextEditingController fatherNameController =
   TextEditingController();
-
-
-  // SAVE STUDENT
 
 
   void saveStudent() {
@@ -44,9 +37,14 @@ class _ForStudentAddStudentState
     );
   }
 
+  @override
+  void dispose() {
+    nameController.dispose();
+    fatherNameController.dispose();
+    super.dispose();
+  }
 
   // BUILD
-
 
   @override
   Widget build(BuildContext context) {
@@ -56,19 +54,16 @@ class _ForStudentAddStudentState
           "Add Student",
         ),
       ),
-
       body: Padding(
         padding: const EdgeInsets.all(20),
-
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-
           children: [
 
             // NAME
+
             TextField(
               controller: nameController,
-
               decoration: const InputDecoration(
                 labelText: "Name",
                 hintText: "Enter name",
@@ -78,9 +73,9 @@ class _ForStudentAddStudentState
             const SizedBox(height: 20),
 
             // FATHER NAME
+
             TextField(
               controller: fatherNameController,
-
               decoration: const InputDecoration(
                 labelText: "Father Name",
                 hintText: "Enter father name",
@@ -90,9 +85,9 @@ class _ForStudentAddStudentState
             const SizedBox(height: 30),
 
             // ADD BUTTON
+
             ElevatedButton(
               onPressed: saveStudent,
-
               child: const Text(
                 "Add",
               ),
@@ -104,13 +99,12 @@ class _ForStudentAddStudentState
   }
 }
 
-
 // EDIT STUDENT SCREEN
-
 
 class ForStudentsEditScreen extends StatefulWidget {
 
-  // Whole Student object
+  // WHOLE STUDENT OBJECT
+
   final Student studentModelForEdit;
 
   const ForStudentsEditScreen({
@@ -126,9 +120,7 @@ class ForStudentsEditScreen extends StatefulWidget {
 class _ForStudentsEditScreenState
     extends State<ForStudentsEditScreen> {
 
-
   // CONTROLLERS
-
 
   final TextEditingController nameController =
   TextEditingController();
@@ -136,9 +128,7 @@ class _ForStudentsEditScreenState
   final TextEditingController fatherNameController =
   TextEditingController();
 
-
   // INIT STATE
-
 
   @override
   void initState() {
@@ -154,7 +144,6 @@ class _ForStudentsEditScreenState
   // SAVE EDIT STUDENT
 
   void saveEditStudent() {
-
     String name = nameController.text;
 
     String fatherName =
@@ -164,6 +153,7 @@ class _ForStudentsEditScreenState
       id: widget.studentModelForEdit.id,
       name: name,
       fatherName: fatherName,
+      subjects: widget.studentModelForEdit.subjects,
     );
 
     Navigator.pop(
@@ -172,6 +162,12 @@ class _ForStudentsEditScreenState
     );
   }
 
+  @override
+  void dispose() {
+    nameController.dispose();
+    fatherNameController.dispose();
+    super.dispose();
+  }
 
   // BUILD
 
@@ -183,22 +179,16 @@ class _ForStudentsEditScreenState
           "Edit Student",
         ),
       ),
-
       body: Padding(
         padding: const EdgeInsets.all(20),
-
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-
           children: [
-
 
             // STUDENT ID
 
-
             Text(
               "Student ID: ${widget.studentModelForEdit.id}",
-
               style: const TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
@@ -207,12 +197,10 @@ class _ForStudentsEditScreenState
 
             const SizedBox(height: 25),
 
-
             // NAME
 
             TextField(
               controller: nameController,
-
               decoration: const InputDecoration(
                 labelText: "Name",
               ),
@@ -220,13 +208,10 @@ class _ForStudentsEditScreenState
 
             const SizedBox(height: 20),
 
-
             // FATHER NAME
-
 
             TextField(
               controller: fatherNameController,
-
               decoration: const InputDecoration(
                 labelText: "Father Name",
               ),
@@ -234,12 +219,10 @@ class _ForStudentsEditScreenState
 
             const SizedBox(height: 30),
 
-
             // UPDATE BUTTON
 
             ElevatedButton(
               onPressed: saveEditStudent,
-
               child: const Text(
                 "Update",
               ),
